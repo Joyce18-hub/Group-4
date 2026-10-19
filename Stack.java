@@ -1,3 +1,11 @@
+
+ /* 
+ * Description: Array-based Stack ADT with a maximum capacity of 10.
+ * Programmed by: <Group Members> <BSIT> <2511600504> <DATA STRUCTURE>
+ * Last Modified: October 17, 2026
+ */
+ 
+
 public class Stack {
 
     private static final int MAX_SIZE = 10;
