@@ -118,3 +118,45 @@ private void createdGUI() {
      statusLabel.setText("Status: Please enter a valid integer..");
   }
 }
+
+// POP
+    private void popAction() {
+
+        Integer removed = stack.pop();
+
+        if (removed == null) {
+
+            statusLabel.setText(
+                "STACK UNDERFLOW: Cannot pop, stack is empty."
+            );
+
+        } else {
+
+            statusLabel.setText(
+                "Status: " + removed + " popped."
+            );
+        }
+
+        updateStackDisplay();
+    }
+
+ // PEEK
+    private void peekAction() {
+
+        Integer topValue = stack.peek();
+
+        if (topValue == null) {
+
+            statusLabel.setText(
+                "Status: Stack is empty. Nothing to peek."
+            );
+
+        } else {
+
+            statusLabel.setText(
+                "Status: TOP element is " + topValue
+            );
+        }
+
+        updateStackDisplay();
+    }
