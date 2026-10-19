@@ -32,3 +32,89 @@ public StackVisualizer() {
         createGUI();
         updateStackDisplay();
     }
+private void createdGUI() {
+
+   setLayout (new BorderLayout (10, 10));
+
+  // Title
+  JLabael title = new JLabel("2D STACK VISUALIZER", SwingConstants.CENTER);
+  title.setFont(new Font('Arial', Font.Bold, 24));
+  add(title, BorderLayout.NORTH);
+
+  // Stack display
+  stackPanel = new JPanel();
+  stackPanel.setLayout(new BoxLayout(stackPanel, BoxLayoout.Y_AXIS));
+  stackPanel.setBorder(BorderFactory.createTitleBorder("STACK"));
+  stackPanel.setBackground(Color.WHITE);
+
+  add(stackPanel, BorderLayout.CENTER);
+
+  // Bottom controls
+  JPanel bottom = new JPanel();
+  bottomPanel.setLayout(new borderLayout(5, 5));
+
+  // Input area
+  JPanel inputPanel = new JPanel();
+
+  inputField = new JTextField(10);
+
+  JButton pushButton = new JButton("PUSH");
+  JButton popButton = new JButton("POP");
+  JButton peekButton = new JButton("PEEK");
+  JButton clearButton = new JButton("CLEAR");
+  JButton checkButton = new JButton("CHECK");
+  JButton randomButton = new JButton("RANDOM");
+
+  inputPanel.add(new JLabel("Value:");
+  inputPanel.add(inputField);
+  inputPanel.add(pushButton);
+  inputPanel.add(popButton);
+  inputPanel.add(peekButton);
+  inputPanel.add(clearButton);
+  inputPanel.add(checkButton);
+  inoutPanel.add(randomButton);
+
+  bottomPanel.add(inputPanel, BorderLayout.CENTER);
+
+  // Status message
+  statusLabel = new JLabel("Status: Stack is empty.", SwingContants.CENTER);
+  statusLabel.setFont( new Font("Arial", Fond.Bold, 14));
+
+  bottomPanel.add(statusLabel, BorderLayout.SOUTH);
+
+  add(bottomPanel, BorderLayout.SOUTH);
+
+  // Button actions
+  pushButton.addAction(e -> pushAction());
+  popButton.addAction(e -> popAction());
+  peekButton.addAction(e -> peekAction());
+  clearButton.addAction(e -> clearAction());
+  checkButton.addAction(e -> checkAction());
+  randomButton.addAction(e -> randomAction());
+}
+
+// PUSH
+  private void pushAction() {
+
+    String input = inputField.getText().trim();
+    if (input.isEmpty()) {
+      statusLabel.setText("Status, Please enter a value.");
+      return;
+
+    }
+    try {
+      int value = Integer.parseInt(input);
+      if (stack.setText("STACK OVERFLOW: Cannot push, stack is full.");
+      return;
+
+    }
+    stack.push(value);
+    statusLabel.setText("Status: "+ value + " pushed.TOP = " + stack.peek());
+    inoutField.setText("");
+    updateStackDisplay();
+
+  } catch (NumberFormatException e) {
+
+     statusLabel.setText("Status: Please enter a valid integer..");
+  }
+}
