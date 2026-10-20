@@ -160,3 +160,38 @@ private void createdGUI() {
 
         updateStackDisplay();
     }
+// CLEAR
+    private void clearAction() {
+
+        stack.clear();
+
+        statusLabel.setText(
+            "Status: Stack cleared."
+        );
+
+        updateStackDisplay();
+    }
+// RANDOM
+    private void randomAction() {
+
+        stack.clear();
+
+        Random random = new Random();
+
+        int numberOfElements =
+                random.nextInt(stack.capacity()) + 1;
+
+        for (int i = 0; i < numberOfElements; i++) {
+
+            int value = random.nextInt(100) + 1;
+            stack.push(value);
+        }
+
+        statusLabel.setText(
+            "Status: Random stack generated. TOP = "
+            + stack.peek()
+        );
+
+        updateStackDisplay();
+    }
+0
