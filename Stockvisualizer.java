@@ -195,3 +195,90 @@ private void createdGUI() {
         updateStackDisplay();
     }
 0
+   // Updates the visual stack
+    private void updateStackDisplay() {
+
+        stackPanel.removeAll();
+
+        if (stack.isEmpty()) {
+
+            JLabel emptyLabel = new JLabel("STACK EMPTY");
+            emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            emptyLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+            stackPanel.add(Box.createVerticalGlue());
+            stackPanel.add(emptyLabel);
+            stackPanel.add(Box.createVerticalGlue());
+
+        } else {
+
+            int[] elements = stack.getElements();
+
+            // Display from top to bottom
+            for (int i = elements.length - 1; i >= 0; i--) {
+
+                JPanel block = new JPanel();
+                block.setPreferredSize(new Dimension(180, 45));
+                block.setMaximumSize(new Dimension(180, 45));
+                block.setBorder(
+                    BorderFactory.createLineBorder(Color.BLACK, 2)
+                );
+
+                JLabel valueLabel =
+                        new JLabel(String.valueOf(elements[i]));
+
+                valueLabel.setFont(
+                    new Font("Arial", Font.BOLD, 18)
+                );
+
+                block.add(valueLabel);
+
+                if (i == elements.length - 1) {
+
+                    JLabel topLabel = new JLabel("  <- TOP");
+
+                    topLabel.setFont(
+                        new Font("Arial", Font.BOLD, 14)
+                    );
+
+                    block.add(topLabel);
+                }
+
+                block.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                stackPanel.add(block);
+                stackPanel.add(Box.createRigidArea(
+                    new Dimension(0, 5)
+                ));
+            }
+        }
+
+        stackPanel.revalidate();
+        stackPanel.repaint();
+}
+block.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                stackPanel.add(block);
+                stackPanel.add(Box.createRigidArea(
+                    new Dimension(0, 5)
+                ));
+            }
+        }
+
+        stackPanel.revalidate();
+        stackPanel.repaint();
+    }
+
+    public static void main(String[] args) {
+
+        if (GraphicsEnvironment.isHeadless()) {
+            Stack.main(args);
+            return;
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            StackVisualizer window = new StackVisualizer();
+            window.setVisible(true);
+        });
+    }
+
