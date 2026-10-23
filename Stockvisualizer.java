@@ -3,7 +3,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class StackVisualizer extends JFrame {
-  private Stack stack;
+
+    private Stack stack;
     private JTextField inputField;
     private JPanel stackPanel;
     private JLabel statusLabel;
@@ -20,106 +21,107 @@ public class StackVisualizer extends JFrame {
         createGUI();
         updateStackDisplay();
     }
-public StackVisualizer() {
 
-        stack = new Stack();
+    private void createGUI() {
 
-        setTitle("2D Stack Visualizer");
-        setSize(600, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
 
-        createGUI();
-        updateStackDisplay();
+        // Title
+        JLabel title = new JLabel("2D STACK VISUALIZER", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        add(title, BorderLayout.NORTH);
+
+        // Stack display
+        stackPanel = new JPanel();
+        stackPanel.setLayout(new BoxLayout(stackPanel, BoxLayout.Y_AXIS));
+        stackPanel.setBorder(BorderFactory.createTitledBorder("Stack"));
+        stackPanel.setBackground(Color.WHITE);
+
+        add(stackPanel, BorderLayout.CENTER);
+
+        // Bottom controls
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout(5, 5));
+
+        // Input area
+        JPanel inputPanel = new JPanel();
+
+        inputField = new JTextField(10);
+
+        JButton pushButton = new JButton("PUSH");
+        JButton popButton = new JButton("POP");
+        JButton peekButton = new JButton("PEEK");
+        JButton clearButton = new JButton("CLEAR");
+        JButton checkButton = new JButton("CHECK STACK");
+        JButton randomButton = new JButton("RANDOM");
+
+        inputPanel.add(new JLabel("Value:"));
+        inputPanel.add(inputField);
+        inputPanel.add(pushButton);
+        inputPanel.add(popButton);
+        inputPanel.add(peekButton);
+        inputPanel.add(clearButton);
+        inputPanel.add(checkButton);
+        inputPanel.add(randomButton);
+
+        bottomPanel.add(inputPanel, BorderLayout.CENTER);
+
+        // Status message
+        statusLabel = new JLabel("Status: Stack is empty.", SwingConstants.CENTER);
+        statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+        bottomPanel.add(statusLabel, BorderLayout.SOUTH);
+
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Button actions
+        pushButton.addActionListener(e -> pushAction());
+        popButton.addActionListener(e -> popAction());
+        peekButton.addActionListener(e -> peekAction());
+        clearButton.addActionListener(e -> clearAction());
+        checkButton.addActionListener(e -> checkAction());
+        randomButton.addActionListener(e -> randomAction());
     }
-private void createdGUI() {
 
-   setLayout (new BorderLayout (10, 10));
+    // PUSH
+    private void pushAction() {
 
-  // Title
-  JLabael title = new JLabel("2D STACK VISUALIZER", SwingConstants.CENTER);
-  title.setFont(new Font('Arial', Font.Bold, 24));
-  add(title, BorderLayout.NORTH);
+        String input = inputField.getText().trim();
 
-  // Stack display
-  stackPanel = new JPanel();
-  stackPanel.setLayout(new BoxLayout(stackPanel, BoxLayoout.Y_AXIS));
-  stackPanel.setBorder(BorderFactory.createTitleBorder("STACK"));
-  stackPanel.setBackground(Color.WHITE);
+        if (input.isEmpty()) {
+            statusLabel.setText("Status: Please enter a value.");
+            return;
+        }
 
-  add(stackPanel, BorderLayout.CENTER);
+        try {
 
-  // Bottom controls
-  JPanel bottom = new JPanel();
-  bottomPanel.setLayout(new borderLayout(5, 5));
+            int value = Integer.parseInt(input);
 
-  // Input area
-  JPanel inputPanel = new JPanel();
+            if (stack.isFull()) {
+                statusLabel.setText(
+                    "STACK OVERFLOW: Cannot push, stack is full."
+                );
+                return;
+            }
 
-  inputField = new JTextField(10);
+            stack.push(value);
 
-  JButton pushButton = new JButton("PUSH");
-  JButton popButton = new JButton("POP");
-  JButton peekButton = new JButton("PEEK");
-  JButton clearButton = new JButton("CLEAR");
-  JButton checkButton = new JButton("CHECK");
-  JButton randomButton = new JButton("RANDOM");
+            statusLabel.setText(
+                "Status: " + value + " pushed. TOP = " + stack.peek()
+            );
 
-  inputPanel.add(new JLabel("Value:");
-  inputPanel.add(inputField);
-  inputPanel.add(pushButton);
-  inputPanel.add(popButton);
-  inputPanel.add(peekButton);
-  inputPanel.add(clearButton);
-  inputPanel.add(checkButton);
-  inoutPanel.add(randomButton);
+            inputField.setText("");
+            updateStackDisplay();
 
-  bottomPanel.add(inputPanel, BorderLayout.CENTER);
+        } catch (NumberFormatException e) {
 
-  // Status message
-  statusLabel = new JLabel("Status: Stack is empty.", SwingContants.CENTER);
-  statusLabel.setFont( new Font("Arial", Fond.Bold, 14));
-
-  bottomPanel.add(statusLabel, BorderLayout.SOUTH);
-
-  add(bottomPanel, BorderLayout.SOUTH);
-
-  // Button actions
-  pushButton.addAction(e -> pushAction());
-  popButton.addAction(e -> popAction());
-  peekButton.addAction(e -> peekAction());
-  clearButton.addAction(e -> clearAction());
-  checkButton.addAction(e -> checkAction());
-  randomButton.addAction(e -> randomAction());
-}
-
-// PUSH
-  private void pushAction() {
-
-    String input = inputField.getText().trim();
-    if (input.isEmpty()) {
-      statusLabel.setText("Status, Please enter a value.");
-      return;
-
+            statusLabel.setText(
+                "Status: Please enter a valid integer."
+            );
+        }
     }
-    try {
-      int value = Integer.parseInt(input);
-      if (stack.setText("STACK OVERFLOW: Cannot push, stack is full.");
-      return;
 
-    }
-    stack.push(value);
-    statusLabel.setText("Status: "+ value + " pushed.TOP = " + stack.peek());
-    inoutField.setText("");
-    updateStackDisplay();
-
-  } catch (NumberFormatException e) {
-
-     statusLabel.setText("Status: Please enter a valid integer..");
-  }
-}
-
-// POP
+    // POP
     private void popAction() {
 
         Integer removed = stack.pop();
@@ -140,7 +142,7 @@ private void createdGUI() {
         updateStackDisplay();
     }
 
- // PEEK
+    // PEEK
     private void peekAction() {
 
         Integer topValue = stack.peek();
@@ -160,7 +162,8 @@ private void createdGUI() {
 
         updateStackDisplay();
     }
-// CLEAR
+
+    // CLEAR
     private void clearAction() {
 
         stack.clear();
@@ -171,7 +174,30 @@ private void createdGUI() {
 
         updateStackDisplay();
     }
-// RANDOM
+
+    // CHECK STACK
+    private void checkAction() {
+
+        if (stack.isEmpty()) {
+
+            statusLabel.setText(
+                "Status: Stack is EMPTY."
+            );
+
+        } else {
+
+            statusLabel.setText(
+                "Status: Stack is NOT EMPTY. Size = "
+                + stack.size()
+                + ", TOP = "
+                + stack.peek()
+            );
+        }
+
+        updateStackDisplay();
+    }
+
+    // RANDOM
     private void randomAction() {
 
         stack.clear();
@@ -194,8 +220,8 @@ private void createdGUI() {
 
         updateStackDisplay();
     }
-0
-   // Updates the visual stack
+
+    // Updates the visual stack
     private void updateStackDisplay() {
 
         stackPanel.removeAll();
@@ -255,18 +281,6 @@ private void createdGUI() {
 
         stackPanel.revalidate();
         stackPanel.repaint();
-}
-block.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                stackPanel.add(block);
-                stackPanel.add(Box.createRigidArea(
-                    new Dimension(0, 5)
-                ));
-            }
-        }
-
-        stackPanel.revalidate();
-        stackPanel.repaint();
     }
 
     public static void main(String[] args) {
@@ -281,4 +295,4 @@ block.setAlignmentX(Component.CENTER_ALIGNMENT);
             window.setVisible(true);
         });
     }
-
+}
