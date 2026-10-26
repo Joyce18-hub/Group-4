@@ -281,4 +281,3 @@ block.setAlignmentX(Component.CENTER_ALIGNMENT);
             window.setVisible(true);
         });
     }
-
