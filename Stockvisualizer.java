@@ -1,10 +1,4 @@
-/*
- * Description: 2D graphical Stack Visualizer using Java Swing.
- * Programmed by: <Group Members> <Course> <CN> <Subject>
- * Last Modified: October 15, 2026
- * Version: 1.0
- * Acknowledgements: Java Swing documentation and generative AI assistance.
- */
+
 
 import javax.swing.*;
 import java.awt.*;
