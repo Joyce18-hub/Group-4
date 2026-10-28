@@ -1,3 +1,11 @@
+/*
+ * Description: 2D graphical Stack Visualizer using Java Swing.
+ * Programmed by: <Group Members> <Course> <CN> <Subject>
+ * Last Modified: October 15, 2026
+ * Version: 1.0
+ * Acknowledgements: Java Swing documentation and generative AI assistance.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -10,6 +18,7 @@ public class StackVisualizer extends JFrame {
     private JLabel statusLabel;
 
     public StackVisualizer() {
+
         stack = new Stack();
 
         setTitle("2D Stack Visualizer");
@@ -22,6 +31,7 @@ public class StackVisualizer extends JFrame {
     }
 
     private void createGUI() {
+
         setLayout(new BorderLayout(10, 10));
 
         // Title
@@ -32,8 +42,9 @@ public class StackVisualizer extends JFrame {
         // Stack display
         stackPanel = new JPanel();
         stackPanel.setLayout(new BoxLayout(stackPanel, BoxLayout.Y_AXIS));
-        stackPanel.setBorder(BorderFactory.createTitledBorder("STACK"));
+        stackPanel.setBorder(BorderFactory.createTitledBorder("Stack"));
         stackPanel.setBackground(Color.WHITE);
+
         add(stackPanel, BorderLayout.CENTER);
 
         // Bottom controls
@@ -42,13 +53,14 @@ public class StackVisualizer extends JFrame {
 
         // Input area
         JPanel inputPanel = new JPanel();
+
         inputField = new JTextField(10);
 
         JButton pushButton = new JButton("PUSH");
         JButton popButton = new JButton("POP");
         JButton peekButton = new JButton("PEEK");
         JButton clearButton = new JButton("CLEAR");
-        JButton checkButton = new JButton("CHECK");
+        JButton checkButton = new JButton("CHECK STACK");
         JButton randomButton = new JButton("RANDOM");
 
         inputPanel.add(new JLabel("Value:"));
@@ -65,6 +77,7 @@ public class StackVisualizer extends JFrame {
         // Status message
         statusLabel = new JLabel("Status: Stack is empty.", SwingConstants.CENTER);
         statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
         bottomPanel.add(statusLabel, BorderLayout.SOUTH);
 
         add(bottomPanel, BorderLayout.SOUTH);
@@ -76,11 +89,11 @@ public class StackVisualizer extends JFrame {
         clearButton.addActionListener(e -> clearAction());
         checkButton.addActionListener(e -> checkAction());
         randomButton.addActionListener(e -> randomAction());
-        inputField.addActionListener(e -> pushAction()); // Enter key pushes
     }
 
     // PUSH
     private void pushAction() {
+
         String input = inputField.getText().trim();
 
         if (input.isEmpty()) {
@@ -89,31 +102,49 @@ public class StackVisualizer extends JFrame {
         }
 
         try {
+
             int value = Integer.parseInt(input);
 
             if (stack.isFull()) {
-                statusLabel.setText("STACK OVERFLOW: Cannot push, stack is full.");
+                statusLabel.setText(
+                    "STACK OVERFLOW: Cannot push, stack is full."
+                );
                 return;
             }
 
             stack.push(value);
-            statusLabel.setText("Status: " + value + " pushed. TOP = " + stack.peek());
+
+            statusLabel.setText(
+                "Status: " + value + " pushed. TOP = " + stack.peek()
+            );
+
             inputField.setText("");
             updateStackDisplay();
 
         } catch (NumberFormatException e) {
-            statusLabel.setText("Status: Please enter a valid integer.");
+
+            statusLabel.setText(
+                "Status: Please enter a valid integer."
+            );
         }
     }
 
     // POP
     private void popAction() {
+
         Integer removed = stack.pop();
 
         if (removed == null) {
-            statusLabel.setText("STACK UNDERFLOW: Cannot pop, stack is empty.");
+
+            statusLabel.setText(
+                "STACK UNDERFLOW: Cannot pop, stack is empty."
+            );
+
         } else {
-            statusLabel.setText("Status: " + removed + " popped.");
+
+            statusLabel.setText(
+                "Status: " + removed + " popped."
+            );
         }
 
         updateStackDisplay();
@@ -121,12 +152,20 @@ public class StackVisualizer extends JFrame {
 
     // PEEK
     private void peekAction() {
+
         Integer topValue = stack.peek();
 
         if (topValue == null) {
-            statusLabel.setText("Status: Stack is empty. Nothing to peek.");
+
+            statusLabel.setText(
+                "Status: Stack is empty. Nothing to peek."
+            );
+
         } else {
-            statusLabel.setText("Status: TOP element is " + topValue);
+
+            statusLabel.setText(
+                "Status: TOP element is " + topValue
+            );
         }
 
         updateStackDisplay();
@@ -134,43 +173,69 @@ public class StackVisualizer extends JFrame {
 
     // CLEAR
     private void clearAction() {
+
         stack.clear();
-        statusLabel.setText("Status: Stack cleared.");
+
+        statusLabel.setText(
+            "Status: Stack cleared."
+        );
+
         updateStackDisplay();
     }
 
-    // CHECK
+    // CHECK STACK
     private void checkAction() {
+
         if (stack.isEmpty()) {
-            statusLabel.setText("Status: Stack is EMPTY (0/" + stack.capacity() + ").");
-        } else if (stack.isFull()) {
-            statusLabel.setText("Status: Stack is FULL (" + stack.size() + "/" + stack.capacity() + ").");
+
+            statusLabel.setText(
+                "Status: Stack is EMPTY."
+            );
+
         } else {
-            statusLabel.setText("Status: Stack has " + stack.size() + "/" + stack.capacity()
-                    + " elements. Not empty, not full.");
+
+            statusLabel.setText(
+                "Status: Stack is NOT EMPTY. Size = "
+                + stack.size()
+                + ", TOP = "
+                + stack.peek()
+            );
         }
+
+        updateStackDisplay();
     }
 
     // RANDOM
     private void randomAction() {
+
         stack.clear();
 
         Random random = new Random();
-        int numberOfElements = random.nextInt(stack.capacity()) + 1;
+
+        int numberOfElements =
+                random.nextInt(stack.capacity()) + 1;
 
         for (int i = 0; i < numberOfElements; i++) {
-            stack.push(random.nextInt(100) + 1);
+
+            int value = random.nextInt(100) + 1;
+            stack.push(value);
         }
 
-        statusLabel.setText("Status: Random stack generated. TOP = " + stack.peek());
+        statusLabel.setText(
+            "Status: Random stack generated. TOP = "
+            + stack.peek()
+        );
+
         updateStackDisplay();
     }
 
     // Updates the visual stack
     private void updateStackDisplay() {
+
         stackPanel.removeAll();
 
         if (stack.isEmpty()) {
+
             JLabel emptyLabel = new JLabel("STACK EMPTY");
             emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             emptyLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -180,6 +245,7 @@ public class StackVisualizer extends JFrame {
             stackPanel.add(Box.createVerticalGlue());
 
         } else {
+
             int[] elements = stack.getElements();
 
             // Display from top to bottom
@@ -188,22 +254,36 @@ public class StackVisualizer extends JFrame {
                 JPanel block = new JPanel();
                 block.setPreferredSize(new Dimension(180, 45));
                 block.setMaximumSize(new Dimension(180, 45));
-                block.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                block.setBorder(
+                    BorderFactory.createLineBorder(Color.BLACK, 2)
+                );
 
-                JLabel valueLabel = new JLabel(String.valueOf(elements[i]));
-                valueLabel.setFont(new Font("Arial", Font.BOLD, 18));
+                JLabel valueLabel =
+                        new JLabel(String.valueOf(elements[i]));
+
+                valueLabel.setFont(
+                    new Font("Arial", Font.BOLD, 18)
+                );
+
                 block.add(valueLabel);
 
                 if (i == elements.length - 1) {
+
                     JLabel topLabel = new JLabel("  <- TOP");
-                    topLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+                    topLabel.setFont(
+                        new Font("Arial", Font.BOLD, 14)
+                    );
+
                     block.add(topLabel);
                 }
 
                 block.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 stackPanel.add(block);
-                stackPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+                stackPanel.add(Box.createRigidArea(
+                    new Dimension(0, 5)
+                ));
             }
         }
 
@@ -212,8 +292,9 @@ public class StackVisualizer extends JFrame {
     }
 
     public static void main(String[] args) {
+
         if (GraphicsEnvironment.isHeadless()) {
-            System.out.println("No display available; the GUI cannot be shown.");
+            Stack.main(args);
             return;
         }
 
@@ -221,45 +302,5 @@ public class StackVisualizer extends JFrame {
             StackVisualizer window = new StackVisualizer();
             window.setVisible(true);
         });
-    }
-}
-
-// Simple fixed-capacity stack used by the visualizer
-class Stack {
-
-    private static final int CAPACITY = 8;
-    private final int[] data = new int[CAPACITY];
-    private int size = 0;
-
-    public int capacity()    { return CAPACITY; }
-    public int size()        { return size; }
-    public boolean isEmpty() { return size == 0; }
-    public boolean isFull()  { return size == CAPACITY; }
-
-    public boolean push(int value) {
-        if (isFull()) return false;
-        data[size++] = value;
-        return true;
-    }
-
-    public Integer pop() {
-        if (isEmpty()) return null;
-        return data[--size];
-    }
-
-    public Integer peek() {
-        if (isEmpty()) return null;
-        return data[size - 1];
-    }
-
-    public void clear() {
-        size = 0;
-    }
-
-    // Bottom -> top
-    public int[] getElements() {
-        int[] copy = new int[size];
-        System.arraycopy(data, 0, copy, 0, size);
-        return copy;
     }
 }
